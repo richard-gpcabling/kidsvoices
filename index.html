@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="title" content="KIDS Voices">
+<meta name="description" content="">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gpcabling.online/kidsvoices">
+<meta property="og:title" content="KIDS Voices">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://gpcabling.online/kidsvoices/banner.jpg">
+<title>Vídeo e Questionário</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;min-height:100svh;background:#101923;color:#fff;font-family:Arial,sans-serif;display:grid;place-items:center;padding:20px}main{width:min(100%,1000px)}.player{position:relative;background:#000;border-radius:16px;overflow:hidden;box-shadow:0 20px 70px #0006}video{display:block;width:100%;max-height:85vh;background:#000}.final{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:#102737f5}.final[hidden]{display:none}h1{font-size:clamp(24px,5vw,38px);margin:0 0 14px}p{color:#d3e1e9;line-height:1.6;margin:0 0 28px}.link{display:inline-block;background:#fff;color:#123d51;text-decoration:none;font-weight:bold;padding:17px 26px;border-radius:9px;font-size:20px}.link:hover{background:#e1f3fa}button{display:block;margin:22px auto 0;background:transparent;border:1px solid #92b0c0;border-radius:7px;color:#fff;padding:10px 16px;cursor:pointer;font:inherit}a:focus-visible,button:focus-visible{outline:3px solid #51d4ff;outline-offset:5px}.error{padding:16px;line-height:1.5}.error[hidden]{display:none}
+</style>
+</head>
+<body>
+<main aria-label="Vídeo e acesso ao questionário">
+<div class="player" id="player">
+<video id="video" autoplay controls playsinline preload="metadata" aria-label="Vídeo informativo">
+<source src="voices.mp4" type="video/mp4">
+Seu navegador não suporta vídeo HTML5.
+</video>
+<section class="final" id="final" aria-labelledby="final-title" hidden>
+<div><h1 id="final-title">Acesse o questionário</h1><p>Clique no link abaixo para continuar.</p><a class="link" id="questionario" href="https://redcap.hc.fm.usp.br/surveys/?s=RAHLD97APJDCYLL8" target="_blank" rel="noopener noreferrer">Link do Questionário</a><button id="replay" type="button">Assistir novamente</button></div>
+</section>
+</div>
+<p class="error" id="error" role="alert" hidden>Não foi possível reproduzir o vídeo neste navegador. Você pode acessar o <a href="https://redcap.hc.fm.usp.br/surveys/?s=RAHLD97APJDCYLL8" style="color:white">Link do Questionário</a>.</p>
+</main>
+<script>
+const video=document.getElementById('video');
+const finalScreen=document.getElementById('final');
+video.addEventListener('ended',async()=>{
+  try{if(document.fullscreenElement)await document.exitFullscreen();}catch(e){}
+  finalScreen.hidden=false;
+  document.getElementById('questionario').focus();
+});
+document.getElementById('replay').addEventListener('click',()=>{
+  finalScreen.hidden=true;
+  video.currentTime=0;
+  video.focus();
+  video.play().catch(()=>{});
+});
+video.addEventListener('error',()=>{document.getElementById('error').hidden=false;});
+video.querySelector('source').addEventListener('error',()=>{document.getElementById('error').hidden=false;});
+</script>
+</body>
+</html>
